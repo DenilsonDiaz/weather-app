@@ -1,0 +1,249 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172b45;
+  background-color: #f1f5fb;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 32px 16px;
+}
+
+header,
+main,
+footer {
+  width: 100%;
+  max-width: 880px;
+  margin-inline: auto;
+}
+
+header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+h1,
+h2 {
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  margin: 0 0 12px;
+  color: #164b91;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 1.3rem;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+header p,
+footer,
+#ayuda-busqueda {
+  color: #4b5e75;
+}
+
+main {
+  display: grid;
+  gap: 20px;
+}
+
+section {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #d4dfed;
+  border-radius: 18px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgb(23 43 69 / 5%);
+}
+
+#formulario-busqueda {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  font-weight: 600;
+}
+
+input,
+button {
+  min-height: 48px;
+  border-radius: 10px;
+  font: inherit;
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid #778ba5;
+  color: inherit;
+  background-color: #ffffff;
+}
+
+input::placeholder {
+  color: #586b82;
+  opacity: 1;
+}
+
+button {
+  padding: 10px 20px;
+  border: 1px solid #185abc;
+  color: #ffffff;
+  background-color: #185abc;
+  font-weight: 600;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+button:hover:not(:disabled) {
+  border-color: #10458f;
+  background-color: #10458f;
+}
+
+button:disabled {
+  border-color: #52657e;
+  background-color: #52657e;
+  cursor: wait;
+}
+
+a {
+  color: #185abc;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #10458f;
+}
+
+:focus-visible {
+  outline: 3px solid #123f83;
+  outline-offset: 4px;
+}
+
+#ayuda-busqueda {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+#mensaje-estado {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border-left: 4px solid #185abc;
+  border-radius: 6px;
+  background-color: #edf4ff;
+  overflow-wrap: anywhere;
+}
+
+#mensaje-estado:empty {
+  display: none;
+}
+
+#mensaje-estado.mensaje-error {
+  color: #862323;
+  border-left-color: #a52c2c;
+  background-color: #fff0f0;
+}
+
+[aria-busy="true"] {
+  cursor: progress;
+}
+
+#lista-ciudades,
+#lista-pronostico {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#lista-ciudades button {
+  width: 100%;
+  text-align: left;
+}
+
+#ubicacion-ciudad {
+  color: #164b91;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 16px;
+  margin: 0;
+}
+
+dt,
+dd {
+  margin: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #e1e8f2;
+  overflow-wrap: anywhere;
+}
+
+dd {
+  text-align: right;
+  font-weight: 600;
+}
+
+#lista-pronostico > li {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #d4dfed;
+  border-radius: 12px;
+  background-color: #f5f8fe;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+@media (min-width: 600px) {
+  body {
+    padding: 48px 24px;
+  }
+
+  section {
+    padding: 32px;
+  }
+
+  #formulario-busqueda {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  #formulario-busqueda label,
+  #ayuda-busqueda {
+    grid-column: 1 / -1;
+  }
+
+  #lista-pronostico {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
