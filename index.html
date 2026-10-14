@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Busca una ciudad para consultar el clima actual y el pronóstico de tres días.">
+  <title>El tiempo por ciudad</title>
+</head>
+<body>
+  <header>
+    <h1>El tiempo por ciudad</h1>
+    <p>Busca una ciudad para consultar el clima actual y el pronóstico de hoy y los dos días siguientes.</p>
+  </header>
+
+  <main>
+    <section aria-labelledby="titulo-busqueda">
+      <h2 id="titulo-busqueda">Buscar una ciudad</h2>
+      <form id="formulario-busqueda">
+        <label for="campo-ciudad">Ciudad</label>
+        <input
+          type="search"
+          id="campo-ciudad"
+          name="ciudad"
+          placeholder="Por ejemplo, Madrid"
+          minlength="2"
+          required
+          aria-describedby="ayuda-busqueda"
+        >
+        <button type="submit" id="boton-buscar">Buscar</button>
+        <p id="ayuda-busqueda">Introduce al menos dos caracteres. Después podrás elegir una ciudad entre los resultados.</p>
+      </form>
+      <p id="mensaje-estado" role="status" aria-live="polite" aria-atomic="true"></p>
+    </section>
+
+    <section id="resultados-busqueda" aria-labelledby="titulo-resultados" hidden>
+      <h2 id="titulo-resultados">Selecciona una ciudad</h2>
+      <ul id="lista-ciudades"></ul>
+    </section>
+
+    <section id="clima-actual" aria-labelledby="titulo-clima" hidden>
+      <h2 id="titulo-clima">Clima actual</h2>
+      <p id="ubicacion-ciudad"></p>
+      <dl>
+        <dt>Temperatura</dt>
+        <dd id="temperatura-actual"></dd>
+        <dt>Sensación térmica</dt>
+        <dd id="sensacion-termica"></dd>
+        <dt>Condición del cielo</dt>
+        <dd id="condicion-cielo"></dd>
+        <dt>Viento</dt>
+        <dd id="velocidad-viento"></dd>
+        <dt>Humedad</dt>
+        <dd id="humedad-actual"></dd>
+      </dl>
+    </section>
+
+    <section id="pronostico" aria-labelledby="titulo-pronostico" hidden>
+      <h2 id="titulo-pronostico">Pronóstico de tres días</h2>
+      <p>Hoy y los dos días siguientes.</p>
+      <ul id="lista-pronostico"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Datos meteorológicos de <a href="https://open-meteo.com/">Open-Meteo</a>.
+      Datos de ubicación de <a href="https://www.geonames.org/">GeoNames</a>.
+    </p>
+  </footer>
+</body>
+</html>
