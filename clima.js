@@ -11,6 +11,8 @@ const sensacionTermica = document.getElementById("sensacion-termica");
 const condicionCielo = document.getElementById("condicion-cielo");
 const velocidadViento = document.getElementById("velocidad-viento");
 const humedadActual = document.getElementById("humedad-actual");
+const pronostico = document.getElementById("pronostico");
+const listaPronostico = document.getElementById("lista-pronostico");
 
 const condicionesCielo = {
   0: "Cielo despejado",
@@ -106,6 +108,8 @@ async function obtenerClima(ciudad) {
     latitude: ciudad.latitude,
     longitude: ciudad.longitude,
     current: "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min",
+    forecast_days: "3",
     timezone: "auto",
     temperature_unit: "celsius",
     wind_speed_unit: "kmh"
@@ -133,6 +137,58 @@ function mostrarClima(datos, ciudad) {
   climaActual.hidden = false;
 }
 
+function formatearFecha(fecha) {
+  if (fecha == null) {
+    return "No disponible";
+  }
+
+  // UTC se usa solo para dar formato al día recibido, sin desplazarlo a la zona del navegador.
+  return new Intl.DateTimeFormat("es", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC"
+  }).format(new Date(`${fecha}T00:00:00Z`));
+}
+
+function mostrarPronostico(datos) {
+  const diario = datos.daily ?? {};
+  const unidades = datos.daily_units ?? {};
+  const nombresDias = ["Hoy", "Mañana", "Pasado mañana"];
+  listaPronostico.replaceChildren();
+
+  for (let indice = 0; indice < 3; indice++) {
+    const tarjeta = document.createElement("li");
+    const titulo = document.createElement("h3");
+    const fecha = document.createElement("time");
+    const dia = diario.time?.[indice];
+    titulo.textContent = nombresDias[indice];
+    fecha.textContent = formatearFecha(dia);
+    if (dia != null) {
+      fecha.dateTime = dia;
+    }
+
+    const condicion = document.createElement("p");
+    condicion.textContent = condicionesCielo[diario.weather_code?.[indice]] ?? "No disponible";
+    const maxima = document.createElement("p");
+    maxima.textContent = `Máxima: ${formatearValor(diario.temperature_2m_max?.[indice], unidades.temperature_2m_max)}`;
+    const minima = document.createElement("p");
+    minima.textContent = `Mínima: ${formatearValor(diario.temperature_2m_min?.[indice], unidades.temperature_2m_min)}`;
+
+    tarjeta.append(titulo, fecha, condicion, maxima, minima);
+    listaPronostico.append(tarjeta);
+  }
+
+  pronostico.hidden = false;
+}
+
+function limpiarDatosClima() {
+  climaActual.hidden = true;
+  pronostico.hidden = true;
+  listaPronostico.replaceChildren();
+}
+
 function obtenerNombreCiudad(ciudad) {
   return [ciudad.name, ciudad.admin1, ciudad.country].filter(Boolean).join(", ");
 }
@@ -142,7 +198,7 @@ async function seleccionarCiudad(ciudad, botonSeleccionado) {
     return;
   }
 
-  climaActual.hidden = true;
+  limpiarDatosClima();
   ciudadSeleccionada = {
     nombre: obtenerNombreCiudad(ciudad),
     latitude: ciudad.latitude,
@@ -158,9 +214,11 @@ async function seleccionarCiudad(ciudad, botonSeleccionado) {
 
   try {
     const datos = await obtenerClima(ciudadSeleccionada);
+    mostrarPronostico(datos);
     mostrarClima(datos, ciudadSeleccionada);
-    mostrarMensaje(`Clima actual de ${ciudadSeleccionada.nombre}.`);
+    mostrarMensaje(`Clima actual y pronóstico de tres días de ${ciudadSeleccionada.nombre}.`);
   } catch (error) {
+    limpiarDatosClima();
     const detalle = error.name === "TimeoutError"
       ? error.message
       : "No se pudo consultar el clima. Comprueba tu conexión y vuelve a intentarlo.";
@@ -198,7 +256,7 @@ async function buscarCiudades(evento) {
   listaCiudades.replaceChildren();
   resultadosBusqueda.hidden = true;
   ciudadSeleccionada = null;
-  climaActual.hidden = true;
+  limpiarDatosClima();
 
   if (nombre.length < 2) {
     mostrarMensaje("Introduce al menos dos caracteres para buscar una ciudad.", true);
