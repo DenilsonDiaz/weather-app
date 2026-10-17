@@ -5,6 +5,30 @@
 Crear una aplicación del tiempo que permita buscar ciudades, consultar
 el clima actual y ver un pronóstico de tres días: hoy y los dos días siguientes.
 
+## Estado actual y decisiones
+
+- Búsqueda y selección de ciudades implementadas.
+- Clima actual con cinco datos (temperatura, sensación térmica, condición del
+  cielo, viento y humedad) y pronóstico de tres días implementados.
+- Diseño final claro con detalles azules.
+- Todas las peticiones tienen un límite de 10 segundos, incluida la lectura del JSON.
+- Una nueva búsqueda limpia los resultados anteriores; los fallos ocultan
+  los datos meteorológicos anteriores.
+- Pruebas simuladas realizadas: petición compartida, tres tarjetas, fechas y
+  zonas horarias, unidades, valores nulos, cero y negativos, limpieza, errores,
+  límite de tiempo y recuperación de controles.
+- Pruebas manuales confirmadas por la persona usuaria en el navegador:
+  búsqueda de Quetzaltenango, visualización de los cinco datos del clima actual,
+  pronóstico de tres días, búsqueda de una ciudad inexistente con mensaje sin
+  resultados y búsqueda sin conexión con mensaje de error. También se confirmó
+  el tiempo límite en la búsqueda: apareció el aviso de 10 segundos y el botón
+  Buscar volvió a habilitarse; en vista móvil, las tres tarjetas se apilan correctamente.
+- Pruebas manuales pendientes: navegación con teclado y tiempo límite al
+  consultar el clima tras seleccionar una ciudad. Las demás comprobaciones de la
+  sección «Forma de trabajo y comprobación» no se dan por realizadas sin confirmación.
+- Próximos pasos: completar las pruebas manuales pendientes de la sección
+  «Forma de trabajo y comprobación» y preparar la entrega.
+
 ## Stack
 
 - HTML5 para la estructura.
